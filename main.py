@@ -13,6 +13,16 @@ train_data_.rename(columns={10:'target'},inplace=True)
 test_data_.rename(columns={10:'target'},inplace=True)
 
 # %%
+target_count = test_data_.target.value_counts()
+print('Class -1:', target_count[-1])
+print('Class 1:', target_count[1])
+print('Proportion:', round(target_count[-1] / target_count[1], 2), ': 1')
+print(f'Rate: {target_count[-1]/(target_count[-1] + target_count[1])*100}%')
+
+target_count.plot(kind='bar', title='Count (target)')
+
+
+# %%
 target_count = train_data_.target.value_counts()
 print('Class -1:', target_count[-1])
 print('Class 1:', target_count[1])
