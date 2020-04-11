@@ -13,23 +13,32 @@ train_data_.rename(columns={10:'target'},inplace=True)
 test_data_.rename(columns={10:'target'},inplace=True)
 
 # %%
+# test 数据分布
 target_count = test_data_.target.value_counts()
 print('Class -1:', target_count[-1])
 print('Class 1:', target_count[1])
 print('Proportion:', round(target_count[-1] / target_count[1], 2), ': 1')
 print(f'Rate: {target_count[-1]/(target_count[-1] + target_count[1])*100}%')
 
-target_count.plot(kind='bar', title='Count (target)')
-
+ax = target_count.plot(kind='bar', title='Count (target Class)', rot=0)
+ax.set_ylim([0, 2200])
+for p in ax.patches:
+    ax.annotate(np.round(p.get_height(), decimals=2), (p.get_x()+p.get_width()/2., p.get_height()), ha='center', va='center', xytext=(0, 10), textcoords='offset points')
+plt.savefig('test_dist.png',bbox_inches='tight',dpi=400,pad_inches=0.05)
 
 # %%
+# train 数据分布
 target_count = train_data_.target.value_counts()
 print('Class -1:', target_count[-1])
 print('Class 1:', target_count[1])
 print('Proportion:', round(target_count[-1] / target_count[1], 2), ': 1')
 print(f'Rate: {target_count[-1]/(target_count[-1] + target_count[1])*100}%')
 
-target_count.plot(kind='bar', title='Count (target)')
+ax = target_count.plot(kind='bar', title='Count (target Class)', rot=0)
+ax.set_ylim([0, 8500])
+for p in ax.patches:
+    ax.annotate(np.round(p.get_height(), decimals=2), (p.get_x()+p.get_width()/2., p.get_height()), ha='center', va='center', xytext=(0, 10), textcoords='offset points')
+plt.savefig('train_dist.png', bbox_inches='tight', dpi=400, pad_inches=0.05)
 
 # %%
 count_class_0, count_class_1 = train_data_.target.value_counts()
