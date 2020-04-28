@@ -27,6 +27,14 @@ print('Original dataset shape %s' % Counter(y))
 # sm = ADASYN(random_state=42)
 # sm = SMOTE(random_state=42)
 sm = BorderlineSMOTE(random_state=42)
+# --------------------TEST@RF--------------------
+#               precision    recall  f1-score   support
+#           -1       0.95      0.83      0.89      1955
+#            1       0.09      0.28      0.14       117
+#     accuracy                           0.80      2072
+#    macro avg       0.52      0.56      0.51      2072
+# weighted avg       0.90      0.80      0.84      2072
+
 X_res, y_res = sm.fit_resample(X, y)
 print('Resampled dataset shape %s' % Counter(y_res))
 # Resampled dataset shape Counter({0: 900, 1: 900})

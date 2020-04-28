@@ -127,5 +127,20 @@ print_report('TRAIN', 'RF', rfc_gs, test_x, test_y)
 # 精度 test
 test_x, test_y = split_xy(test_data_)
 print_report('TEST', 'RF', rfc_gs, test_x, test_y)
+# --------------------TRAIN@RF--------------------
+#               precision    recall  f1-score   support
+#           -1       1.00      0.99      1.00      7819
+#            1       0.87      1.00      0.93       466
+#     accuracy                           0.99      8285
+#    macro avg       0.94      1.00      0.96      8285
+# weighted avg       0.99      0.99      0.99      8285
+# --------------------TEST@RF--------------------
+#               precision    recall  f1-score   support
+#           -1       0.95      0.98      0.96      1955
+#            1       0.17      0.07      0.10       117
+#     accuracy                           0.93      2072
+#    macro avg       0.56      0.52      0.53      2072
+# weighted avg       0.90      0.93      0.91      2072
+
 
 # %%
