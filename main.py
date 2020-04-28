@@ -29,6 +29,9 @@ print('Class 1:', target_count[1])
 print('Proportion:', round(target_count[-1] / target_count[1], 2), ': 1')
 print(f'Rate: {target_count[-1] / (target_count[-1] + target_count[1]) * 100}%')
 
+plt.cla()
+_plt_x = 6
+plt.figure(figsize=(_plt_x, _plt_x / 1.5))
 ax = target_count.plot(kind='bar', title='Count (target Class)', rot=0)
 ax.set_ylim([0, 2200])
 for p in ax.patches:
@@ -44,6 +47,9 @@ print('Class 1:', target_count[1])
 print('Proportion:', round(target_count[-1] / target_count[1], 2), ': 1')
 print(f'Rate: {target_count[-1] / (target_count[-1] + target_count[1]) * 100}%')
 
+plt.cla()
+_plt_x = 6
+plt.figure(figsize=(_plt_x, _plt_x / 1.5))
 ax = target_count.plot(kind='bar', title='Count (target Class)', rot=0)
 ax.set_ylim([0, 8500])
 for p in ax.patches:
@@ -75,6 +81,7 @@ df_test_under.target.value_counts().plot(kind='bar', title='Count (target)')
 # 超采样
 df_class_1_over = df_class_1.sample(count_class_0, replace=True)
 df_test_over = pd.concat([df_class_0, df_class_1_over], axis=0)
+df_test_over.drop(index=1, axis=0)
 
 print('Random over-sampling:')
 print(df_test_over.target.value_counts())
@@ -120,23 +127,5 @@ print_report('TRAIN', 'RF', rfc_gs, test_x, test_y)
 # 精度 test
 test_x, test_y = split_xy(test_data_)
 print_report('TEST', 'RF', rfc_gs, test_x, test_y)
-
-# %%
-
-X, Y = split_xy(train_data_)
-pca = PCA(n_components=10)
-pca.fit(X)
-
-print(pca.explained_variance_ratio_)
-print(pca.explained_variance_)
-
-# %%
-
-X_new = pca.transform(X)
-plt.scatter(X_new[:, 0], X_new[:, 1], marker='o', c=train_data_['target'])
-plt.show()
-
-# %%
-train_data_.iloc[:, 6].value_counts()
 
 # %%
