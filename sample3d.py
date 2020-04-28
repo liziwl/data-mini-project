@@ -14,9 +14,9 @@ test_data_ = pd.read_csv('dataset/test.data', sep='\s+', header=None)
 train_data_.rename(columns={10: 'target'}, inplace=True)
 test_data_.rename(columns={10: 'target'}, inplace=True)
 
-x = np.squeeze(train_data_.iloc[:, 3])
-y = np.squeeze(train_data_.iloc[:, 1])
-z = np.squeeze(train_data_.iloc[:, 5])
+x = np.squeeze(train_data_.iloc[:, 1])
+y = np.squeeze(train_data_.iloc[:, 0])
+z = np.squeeze(train_data_.iloc[:, 2])
 col = np.squeeze(train_data_['target'])
 
 
