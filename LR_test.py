@@ -1,8 +1,8 @@
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report,plot_confusion_matrix
+from sklearn.model_selection import train_test_split, GridSearchCV
+import matplotlib.pyplot as plt
 
 train_data_ = pd.read_csv('dataset/train.data', sep='\s+', header=None)
 test_data_ = pd.read_csv('dataset/test.data', sep='\s+', header=None)
@@ -33,7 +33,7 @@ print(train_data_)
 X, y = split_xy(train_data_)
 
 # 分割数据集 划分为训练集和测试集
-x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
 # 进行标准化处理   因为目标结果经过sigmoid函数转换成了[0,1]之间的概率，所以目标值不需要进行标准化。
 # std = StandardScaler()
@@ -54,14 +54,18 @@ x_test, y_test = split_xy(test_data_)
 print_report(lg, x_test, y_test, "test", "lg")
 
 # GridSearchCV 搜索最优 ------------------------------------------------------------------------------
-# param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100, 1000], "penalty": ['l1', 'l2']}
-# lg = LogisticRegression(class_weight='balanced', solver='liblinear',
-#                         n_jobs=-1)
-# grid_search = GridSearchCV(lg, param_grid=param_grid, cv=5, scoring='f1_macro')
-# grid_search.fit(x_train, y_train)
-# print(grid_search.best_params_)
-# print(grid_search.best_score_)
-# print(grid_search.best_estimator_)
+param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100, 1000], "penalty": ['l1', 'l2']}
+lg = LogisticRegression(class_weight='balanced', solver='liblinear',
+                        n_jobs=-1)
+grid_search = GridSearchCV(lg, param_grid=param_grid, cv=5, scoring='f1_macro')
+grid_search.fit(x_train, y_train)
+print(grid_search.best_params_)
+print(grid_search.best_score_)
+print(grid_search.best_estimator_)
+means = grid_search.cv_results_['mean_test_score']
+params = grid_search.cv_results_['params']
+for mean, param in zip(means, params):
+    print("%f  with:   %r" % (mean, param))
 
 # 最优结果
 """{'C': 0.01, 'penalty': 'l1'}
@@ -100,5 +104,20 @@ weighted avg       0.91      0.94      0.92      2072
     accuracy                           0.94      2072
    macro avg       0.61      0.53      0.54      2072
 weighted avg       0.91      0.94      0.92      2072
-
 """
+
+
+# ------------------------------------------------------------
+titles_options = [("Confusion matrix, without normalization","confus_mat.png", None),
+                  ("Normalized confusion matrix","confus_mat-norm.png", 'true')]
+for title, file_name, normalize in titles_options:
+    disp = plot_confusion_matrix(lg, x_test, y_test,
+                                 display_labels=[-1,1],
+                                 cmap=plt.cm.Blues,
+                                 normalize=normalize)
+    disp.ax_.set_title(title)
+
+    print(title)
+    print(disp.confusion_matrix)
+    plt.savefig(f'lg_{file_name}', bbox_inches='tight', dpi=400, pad_inches=0.05)
+
