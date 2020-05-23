@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.metrics import classification_report, plot_confusion_matrix, recall_score,precision_score,accuracy_score,f1_score
+from sklearn.metrics import classification_report, plot_confusion_matrix, recall_score, precision_score, accuracy_score, f1_score
 import matplotlib.pyplot as plt
 
 train_data_ = pd.read_csv('dataset/train.data', sep='\s+', header=None)
@@ -24,18 +24,19 @@ def print_report(clf, x_test, y_real, data_name=None, clf_name=None):
     y_pred = clf.predict(x_test)
     print(classification_report(y_real, y_pred))
 
-def print_latex(clf, x_test, y_real,caption):
+
+def print_latex(clf, x_test, y_real, caption):
     y_pred = clf.predict(x_test)
-    p0 = precision_score(y_real,y_pred,average=None,labels=[-1,1])
-    p_a = precision_score(y_real,y_pred,average='macro',labels=[-1,1])
+    p0 = precision_score(y_real, y_pred, average=None, labels=[-1, 1])
+    p_a = precision_score(y_real, y_pred, average='macro', labels=[-1, 1])
 
-    r0 = recall_score(y_real,y_pred,average=None,labels=[-1,1])
-    r_a = recall_score(y_real,y_pred,average='macro',labels=[-1,1])
+    r0 = recall_score(y_real, y_pred, average=None, labels=[-1, 1])
+    r_a = recall_score(y_real, y_pred, average='macro', labels=[-1, 1])
 
-    f1_0 = f1_score(y_real,y_pred,average=None,labels=[-1,1])
-    f1_a = f1_score(y_real,y_pred,average='macro',labels=[-1,1])
+    f1_0 = f1_score(y_real, y_pred, average=None, labels=[-1, 1])
+    f1_a = f1_score(y_real, y_pred, average='macro', labels=[-1, 1])
 
-    str1 =  f'''\\begin{{table}}[!h]
+    str1 = f'''\\begin{{table}}[!h]
     \\centering
     \\renewcommand{{\\arraystretch}}{{1.5}}
     \\begin{{tabular}}{{|r|c|c|c|}}
@@ -48,7 +49,8 @@ def print_latex(clf, x_test, y_real,caption):
     \caption{{{caption}}}
 \end{{table}}'''
     print(str1)
-
+    with open(f"{caption}.tex", 'w', encoding='utf8') as f:
+        print(str1, file=f)
 
 
 def plot_mat(clf, x_test, y_test, file_prefix):
@@ -64,4 +66,3 @@ def plot_mat(clf, x_test, y_test, file_prefix):
         print(title)
         print(disp.confusion_matrix)
         plt.savefig(f'{file_prefix}_{file_name}', bbox_inches='tight', dpi=400, pad_inches=0.05)
-
