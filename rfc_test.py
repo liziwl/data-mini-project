@@ -1,8 +1,7 @@
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.svm import SVC, LinearSVC
 
 from util import *
-from sklearn.ensemble import RandomForestClassifier
 
 # 二分类，逻辑回归
 print(train_data_)
@@ -23,8 +22,8 @@ clf.fit(x_train, y_train)
 print_report(clf, x_test, y_test, "pre-train", "RandomForest")
 
 # # GridSearchCV 搜索最优 knn ------------------------------------------------------------------------------
-param_grid = {'bootstrap': [False,True], 'n_estimators': [3, 10, 15, 40, 50, 60,70,90,100],
-             'max_depth': [1, 2, 3, 4, 5, 6, 7, None]}
+param_grid = {'bootstrap': [False, True], 'n_estimators': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 40, 50, 60, 70, 90, 100],
+              'max_depth': [1, 2, 3, 4, 5, 6, 7, None]}
 clf = RandomForestClassifier(n_jobs=-1)
 grid_search = GridSearchCV(clf, param_grid=param_grid, cv=10, scoring='f1_macro', n_jobs=-1)
 grid_search.fit(x_train, y_train)
