@@ -1,31 +1,7 @@
-import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report,plot_confusion_matrix
-from sklearn.model_selection import train_test_split, GridSearchCV
-import matplotlib.pyplot as plt
+from sklearn.model_selection import GridSearchCV, train_test_split
 
-train_data_ = pd.read_csv('dataset/train.data', sep='\s+', header=None)
-test_data_ = pd.read_csv('dataset/test.data', sep='\s+', header=None)
-
-train_data_.rename(columns={10: 'target'}, inplace=True)
-test_data_.rename(columns={10: 'target'}, inplace=True)
-
-
-def split_xy(data):
-    _x = data.drop('target', axis=1)
-    _y = data['target']
-    return _x, _y
-
-
-def print_report(clf, x_test, y_real, data_name=None, clf_name=None):
-    if data_name is None:
-        data_name = " " * 10
-    if clf_name is None:
-        data_name = " " * 10
-    print("-" * 20 + f"{data_name}@{clf_name}" + "-" * 20)
-    y_pred = clf.predict(x_test)
-    print(classification_report(y_real, y_pred))
-
+from util import *
 
 # 二分类，逻辑回归
 print(train_data_)
@@ -53,19 +29,19 @@ print_report(lg, x_test, y_test, "train", "lg", )
 x_test, y_test = split_xy(test_data_)
 print_report(lg, x_test, y_test, "test", "lg")
 
-# GridSearchCV 搜索最优 ------------------------------------------------------------------------------
-param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100, 1000], "penalty": ['l1', 'l2']}
-lg = LogisticRegression(class_weight='balanced', solver='liblinear',
-                        n_jobs=-1)
-grid_search = GridSearchCV(lg, param_grid=param_grid, cv=5, scoring='f1_macro')
-grid_search.fit(x_train, y_train)
-print(grid_search.best_params_)
-print(grid_search.best_score_)
-print(grid_search.best_estimator_)
-means = grid_search.cv_results_['mean_test_score']
-params = grid_search.cv_results_['params']
-for mean, param in zip(means, params):
-    print("%f  with:   %r" % (mean, param))
+# # GridSearchCV 搜索最优 ------------------------------------------------------------------------------
+# param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100, 1000], "penalty": ['l1', 'l2']}
+# lg = LogisticRegression(class_weight='balanced', solver='liblinear',
+#                         n_jobs=-1)
+# grid_search = GridSearchCV(lg, param_grid=param_grid, cv=5, scoring='f1_macro')
+# grid_search.fit(x_train, y_train)
+# print(grid_search.best_params_)
+# print(grid_search.best_score_)
+# print(grid_search.best_estimator_)
+# means = grid_search.cv_results_['mean_test_score']
+# params = grid_search.cv_results_['params']
+# for mean, param in zip(means, params):
+#     print("%f  with:   %r" % (mean, param))
 
 # 最优结果
 """{'C': 0.01, 'penalty': 'l1'}
@@ -84,6 +60,7 @@ print_report(lg, x_test, y_test, "train", "lg-best", )
 
 x_test, y_test = split_xy(test_data_)
 print_report(lg, x_test, y_test, "test", "lg-best")
+print_latex(lg, x_test, y_test)
 """
 --------------------train@lg-best--------------------
               precision    recall  f1-score   support
