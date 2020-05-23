@@ -60,7 +60,7 @@ print_report(lg, x_test, y_test, "train", "lg-best", )
 
 x_test, y_test = split_xy(test_data_)
 print_report(lg, x_test, y_test, "test", "lg-best")
-print_latex(lg, x_test, y_test)
+print_latex(lg, x_test, y_test, "LR")
 """
 --------------------train@lg-best--------------------
               precision    recall  f1-score   support
@@ -96,5 +96,5 @@ for title, file_name, normalize in titles_options:
 
     print(title)
     print(disp.confusion_matrix)
-    plt.savefig(f'lg_{file_name}', bbox_inches='tight', dpi=400, pad_inches=0.05)
+    plt.savefig(f'LR_{file_name}', bbox_inches='tight', dpi=400, pad_inches=0.05)
 
