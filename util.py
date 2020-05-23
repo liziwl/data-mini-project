@@ -40,7 +40,7 @@ def print_latex(clf, x_test, y_real,caption):
     \\renewcommand{{\\arraystretch}}{{1.5}}
     \\begin{{tabular}}{{|r|c|c|c|}}
         \\hline
-                  & precision & recall & f1-score \\\\ \\hline
+                  & Precision & Recall & F1-score \\\\ \\hline
         -1        &     {p0[0]:.5f}     &     {r0[0]:.5f}   &    {f1_0[0]:.5f}      \\\\ \\hline
         1         &     {p0[1]:.5f}      &     {r0[1]:.5f}   &   {f1_0[1]:.5f}       \\\\ \\hline
         macro avg &      {p_a:.5f}     &     {r_a:.5f}   &    {f1_a:.5f}      \\\\ \\hline
