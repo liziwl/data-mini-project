@@ -43,3 +43,11 @@ x_test, y_test = split_xy(test_data_)
 print_report(grid_search.best_estimator_, x_test, y_test, "best-test", "RandomForest")
 plot_mat(grid_search.best_estimator_, x_test, y_test, "RandomForest")
 print_latex(grid_search.best_estimator_, x_test, y_test, "RandomForest")
+
+
+clf = RandomForestClassifier(n_jobs=-1, class_weight='balanced', bootstrap=True, n_estimators=170, max_depth=7)
+
+print_report(grid_search.best_estimator_, x_test, y_test, "best-train2", "KNN")
+
+x_test, y_test = split_xy(test_data_)
+print_report(grid_search.best_estimator_, x_test, y_test, "best-test2", "KNN")
