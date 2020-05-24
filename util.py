@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.metrics import classification_report, plot_confusion_matrix, recall_score, precision_score, accuracy_score, f1_score
 import matplotlib.pyplot as plt
+from imblearn.over_sampling import *
 
 train_data_ = pd.read_csv('dataset/train.data', sep='\s+', header=None)
 test_data_ = pd.read_csv('dataset/test.data', sep='\s+', header=None)
@@ -66,3 +67,11 @@ def plot_mat(clf, x_test, y_test, file_prefix):
         print(title)
         print(disp.confusion_matrix)
         plt.savefig(f'{file_prefix}_{file_name}', bbox_inches='tight', dpi=400, pad_inches=0.05)
+
+
+def resample(X, y):
+    sm = SMOTE(random_state=42)
+    # sm = ADASYN(random_state=42)
+    # sm = SMOTE(random_state=42)
+    _X, _y = sm.fit_resample(X, y)
+    return _X, _y

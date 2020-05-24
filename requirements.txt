@@ -10,3 +10,4 @@ pysocks
 requests
 sklearn
 virtualenv
+imblearn

@@ -7,6 +7,7 @@ from util import *
 print(train_data_)
 
 X, y = split_xy(train_data_)
+# X, y = resample(X, y)
 
 # 分割数据集 划分为训练集和测试集
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
