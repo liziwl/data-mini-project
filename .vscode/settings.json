@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "python.pythonPath": "/home/ziqiang/miniconda3/bin/python",
     "spellright.language": [],
     "spellright.documentTypes": [
         "latex",
