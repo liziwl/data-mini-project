@@ -70,7 +70,7 @@ def plot_mat(clf, x_test, y_test, file_prefix):
 
 
 def resample(X, y):
-    sm = SMOTE(random_state=42)
+    sm = SMOTE(random_state=42, sampling_strategy='minority')
     # sm = ADASYN(random_state=42)
     # sm = SMOTE(random_state=42)
     _X, _y = sm.fit_resample(X, y)
