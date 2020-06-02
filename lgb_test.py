@@ -7,7 +7,7 @@ from util import *
 print(train_data_)
 
 X, y = split_xy(train_data_)
-X, y = resample(X, y)
+# X, y = resample(X, y)
 name = 'LightGBM'
 
 # 分割数据集 划分为训练集和测试集
@@ -19,7 +19,7 @@ x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 # x_test = std.transform(x_test)
 
 # 预测
-clf = lgb.LGBMClassifier(class_weight='balanced', n_jobs=-1)
+clf = lgb.LGBMClassifier(class_weight='balanced', n_jobs=-1, objective='binary', learning_rate=0.1)
 clf.fit(x_train, y_train)
 print_report(clf, x_test, y_test, "pre-train", name)
 x_test, y_test = split_xy(test_data_)
@@ -28,8 +28,9 @@ print_report(clf, x_test, y_test, "pre-test", name)
 # GridSearchCV 搜索最优 LightGBM ------------------------------------------------------------------------------
 param_grid = {
     'n_estimators': [3, 4, 5, 6, 7, 8, 9, 10, 15, 40, 50, 60, 65, 70, 90, 100],
-    'num_leaves': range(3, 50, 5),
-    # 'max_depth': [5, 7],
+    # 'boosting_type':['gbdt','rf','dart','goss'],
+    # 'num_leaves': range(3, 50, 5),
+    'max_depth': [3, 5, 7],
 }
 clf = lgb.LGBMClassifier(class_weight='balanced', n_jobs=-1)
 grid_search = GridSearchCV(clf, param_grid=param_grid, cv=10, scoring='f1_macro', n_jobs=-1)
