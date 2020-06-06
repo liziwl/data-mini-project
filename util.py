@@ -51,6 +51,7 @@ def print_latex(clf, x_test, y_real, caption):
 \end{{table}}'''
     print(str1)
     with open(f"{caption}.tex", 'w', encoding='utf8') as f:
+        print(clf, file=f)
         print(str1, file=f)
 
 
