@@ -564,6 +564,39 @@ XGBoost 没有提供 \texttt{class\_weight='balanced'} 参数，但是提供替�
 % ============================================================================
 \subsection{模型效果对比}
 
+模型效果对比均进行了过采样或者设定了\texttt{class\_weight='balanced'}参数等 类似的平衡少数类的的措施。正类（少数类），precision、recall、F1分数最好的分类器分别是线性SVM、AdaBoost、线性SVM。简单的模型反而相对表现好。但是总体上来说，少数类的准确率在13\%左右，召回率在56\%，F1分数在21\%。
+
+负类（多数类）本身在测试样本上就有优势，不同分类器在召回率表现都差异不大；在召回率上就区别较大了，表现最好还是线性SVM，其次是XGBoost；在F1分数上前两位也服从这个排序。总体上来说，多数类的准确率在96\%左右，召回率在77\%，F1分数在85\%。
+
+如果需要兼顾正类和负类的表现，宏平均值（类表现的算术平均数）是一种度量。只看准确率或F1分数线性SVM是最好的，只看召回率随机森林是最好的。对于不同分类器来说，平均准确率在13\%左右，平均召回率在56\%，平均F1分数在21\%，相对差异不是太大。
+
+
+GBDT 和 LightGBM 结果表现非常接近，这可以理解，因为 LightGBM 是在 GBDT 上改进的，但是可能数据质量或者数量不过无法体现 LightGBM 的改进之处。
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{pos.png}
+    \caption{正类（少数类）在不同分类器上的表现}
+    \label{fig:result:pos}
+\end{figure}
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{neg.png}
+    \caption{负类（多数类）在不同分类器上的表现}
+    \label{fig:result:neg}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{avg.png}
+    \caption{宏平均值（类表现的算术平均数）在不同分类器上的表现}
+    \label{fig:result:avg}
+\end{figure}
+
+
+\clearpage
 \subsection{过采样效果对比}
 \label{sec:resample}
 
