@@ -2,6 +2,8 @@ import pandas as pd
 from sklearn.metrics import classification_report, plot_confusion_matrix, recall_score, precision_score, accuracy_score, f1_score
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import *
+import numpy as np
+from sklearn.utils import class_weight
 
 train_data_ = pd.read_csv('dataset/train.data', sep='\s+', header=None)
 test_data_ = pd.read_csv('dataset/test.data', sep='\s+', header=None)
@@ -76,3 +78,16 @@ def resample(X, y):
     # sm = SMOTE(random_state=42)
     _X, _y = sm.fit_resample(X, y)
     return _X, _y
+
+
+def cls_weight(y_true):
+    class_weights = list(class_weight.compute_class_weight('balanced', np.unique(y_true), y_true))
+    w_array = np.ones(y_true.shape[0], dtype='float')
+    for i, val in enumerate(y_true):
+        w_array[i] = class_weights[val-1]
+    return w_array
+
+
+if __name__ == "__main__":
+    x, y = split_xy(train_data_)
+    print(cls_weight(y))
