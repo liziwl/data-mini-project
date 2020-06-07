@@ -41,6 +41,10 @@ for n_class, ax_title, png_path in class_:
     recall_v = [float(data[f][n_class][2]) for f in file_list]
     f1_v = [float(data[f][n_class][3]) for f in file_list]
 
+    print(np.mean(precision_v))
+    print(np.mean(recall_v))
+    print(np.mean(f1_v))
+
     show_label = [i.replace(".tex", "")[2:] for i in labels]
     # ['LR', 'LinearSVC', 'svm', 'KNN-re', 'RandomForest', 'AdaBoost-re', 'GradientBoosting-re', 'LightGBM-RE', 'xgboost']
     show_label = ['LR', 'LinearSVC', 'SVC\n(RBF)', 'KNN', 'RF',
