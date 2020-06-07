@@ -44,7 +44,7 @@ for n_class, ax_title, png_path in class_:
     show_label = [i.replace(".tex", "")[2:] for i in labels]
     # ['LR', 'LinearSVC', 'svm', 'KNN-re', 'RandomForest', 'AdaBoost-re', 'GradientBoosting-re', 'LightGBM-RE', 'xgboost']
     show_label = ['LR', 'LinearSVC', 'SVC\n(RBF)', 'KNN', 'RF',
-                  'AdaBoost', 'GBM', 'Light\nGBM', 'XGBoost']
+                  'AdaBoost', 'GBDT', 'Light\nGBM', 'XGBoost']
 
     print(list(zip(labels, show_label)))
     # print(show_label)
